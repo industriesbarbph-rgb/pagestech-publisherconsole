@@ -181,20 +181,19 @@
   animation: none !important;
 }
 
-/* Admin Console: intentionally asymmetric, like one edge never fully sprang back. */
+/* Admin Console: only two visible layers, with the right edge still slightly compressed. */
 .preview-shell .admin-label {
   position: relative !important;
   margin-top: -7px !important;
   padding: 7px 16px 8px 18px !important;
   border: 1px solid rgba(143,151,160,.30) !important;
   border-radius: 12px 12px 7px 13px !important;
-  background: linear-gradient(180deg,rgba(255,255,255,.76),rgba(226,230,234,.58)) !important;
+  background: linear-gradient(180deg,rgba(255,255,255,.78),rgba(226,230,234,.62)) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.88),
-    inset -7px -3px 9px rgba(108,116,124,.17),
-    inset 2px 0 0 rgba(255,255,255,.38),
-    0 4px 10px rgba(54,62,70,.07) !important;
-  transform: translateY(-7px) perspective(180px) rotateX(.4deg) !important;
+    inset -5px -2px 7px rgba(108,116,124,.14),
+    0 3px 0 #d5d9dd,
+    0 6px 0 #b8bec4 !important;
+  transform: translateY(-7px) perspective(180px) rotateX(.35deg) !important;
   font: 600 11px/1.1 Inter, ui-sans-serif, system-ui, sans-serif !important;
   letter-spacing: .12em !important;
   text-transform: uppercase !important;
@@ -203,17 +202,7 @@
 }
 
 .preview-shell .admin-label::after {
-  content: '';
-  position: absolute;
-  right: 4px;
-  bottom: 2px;
-  width: 24%;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(118,126,134,.12);
-  filter: blur(3px);
-  transform: rotate(-5deg);
-  pointer-events: none;
+  display: none !important;
 }
 
 @keyframes ambientLightDrift {
