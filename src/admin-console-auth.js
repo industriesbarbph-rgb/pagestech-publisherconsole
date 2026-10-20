@@ -4,8 +4,54 @@ const SUPABASE_URL = 'https://hugnkvxshrhomjnaefuh.supabase.co'
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_tMB8JbUjV6P4yCfCA3vQdg_S6Hcc7SN'
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
 
+const PROTECTED_CONTROL_SELECTOR = '.preview-shell .rail button, .preview-shell .analytics-menu button'
+
+document.documentElement.dataset.adminAccess = 'locked'
+
 function getRedirectUrl() {
   return `${window.location.origin}${window.location.pathname}`
+}
+
+function removeLegacySettings() {
+  document.querySelectorAll('[data-panel="Settings"], .preview-panel[aria-label="Settings panel"]').forEach(node => node.remove())
+}
+
+function closeProtectedUi() {
+  document.querySelector('.analytics-menu')?.classList.remove('is-open')
+  const layer = document.querySelector('.preview-panel-layer')
+  if (layer) layer.innerHTML = ''
+  document.querySelectorAll('.rail button').forEach(button => button.classList.remove('is-active'))
+}
+
+function setProtectedControlsEnabled(enabled) {
+  removeLegacySettings()
+  document.documentElement.dataset.adminAccess = enabled ? 'unlocked' : 'locked'
+  document.querySelectorAll(PROTECTED_CONTROL_SELECTOR).forEach(control => {
+    control.disabled = !enabled
+    control.setAttribute('aria-disabled', enabled ? 'false' : 'true')
+    if (!enabled) control.setAttribute('tabindex', '-1')
+    else control.removeAttribute('tabindex')
+  })
+  if (!enabled) closeProtectedUi()
+}
+
+async function refreshAdminAccess() {
+  setProtectedControlsEnabled(false)
+
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+  const session = sessionData?.session
+  if (sessionError || !session) return false
+
+  const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin')
+  if (adminError || isAdmin !== true) {
+    await supabase.auth.signOut()
+    setProtectedControlsEnabled(false)
+    return false
+  }
+
+  setProtectedControlsEnabled(true)
+  closeVerificationDialog()
+  return true
 }
 
 function closeVerificationDialog() {
@@ -13,6 +59,7 @@ function closeVerificationDialog() {
 }
 
 function openVerificationDialog() {
+  if (document.documentElement.dataset.adminAccess === 'unlocked') return
   if (document.querySelector('.admin-verification-backdrop')) return
 
   const backdrop = document.createElement('div')
@@ -101,8 +148,37 @@ function bindAdminConsoleTrigger() {
   })
 }
 
-bindAdminConsoleTrigger()
+function enforceLockedInteraction(event) {
+  if (document.documentElement.dataset.adminAccess === 'unlocked') return
+  const protectedControl = event.target.closest?.(PROTECTED_CONTROL_SELECTOR)
+  if (!protectedControl) return
+  event.preventDefault()
+  event.stopImmediatePropagation()
+}
 
+document.addEventListener('click', enforceLockedInteraction, true)
 document.addEventListener('keydown', event => {
+  if ((event.key === 'Enter' || event.key === ' ') && event.target.closest?.(PROTECTED_CONTROL_SELECTOR)) {
+    enforceLockedInteraction(event)
+  }
   if (event.key === 'Escape') closeVerificationDialog()
+}, true)
+
+const observer = new MutationObserver(() => {
+  removeLegacySettings()
+  const enabled = document.documentElement.dataset.adminAccess === 'unlocked'
+  document.querySelectorAll(PROTECTED_CONTROL_SELECTOR).forEach(control => {
+    control.disabled = !enabled
+    control.setAttribute('aria-disabled', enabled ? 'false' : 'true')
+    if (!enabled) control.setAttribute('tabindex', '-1')
+  })
+})
+observer.observe(document.body, { childList: true, subtree: true })
+
+removeLegacySettings()
+bindAdminConsoleTrigger()
+refreshAdminAccess()
+
+supabase.auth.onAuthStateChange(() => {
+  setTimeout(() => refreshAdminAccess(), 0)
 })

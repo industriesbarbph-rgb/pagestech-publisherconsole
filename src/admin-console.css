@@ -1,4 +1,4 @@
-/* Admin Console verification trigger: compact slanted-edge access plate centered above the publisher title. */
+/* Admin Console verification trigger: compact, symmetrical slanted-edge access plate. */
 .preview-shell .admin-label {
   position: absolute !important;
   z-index: 12 !important;
@@ -7,26 +7,28 @@
   margin: 0 !important;
   transform: translateX(-50%);
   min-width: 118px;
-  min-height: 34px;
+  min-height: 36px;
   display: inline-grid;
   place-items: center;
-  padding: 10px 18px !important;
-  border: 1px solid rgba(255,255,255,.94) !important;
-  color: #2b3035 !important;
-  background: linear-gradient(160deg,#f8f9fa 0%,#d9dde1 33%,#b8bec4 58%,#eef0f2 100%) !important;
+  padding: 9px 18px !important;
+  border: 4px solid transparent !important;
+  color: #252a2f !important;
+  background:
+    linear-gradient(160deg,#fbfcfd 0%,#d9dde1 34%,#b6bcc3 58%,#f2f4f6 100%) padding-box,
+    linear-gradient(145deg,#ffffff 0%,#c8cdd2 22%,#7f878f 52%,#aab1b8 72%,#ffffff 100%) border-box !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.98),
-    inset 0 -2px 0 rgba(90,98,106,.22),
-    inset 1px 0 0 rgba(255,255,255,.34) !important;
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -2px 0 rgba(75,83,91,.28) !important;
   filter:
-    drop-shadow(0 2px 0 #a9afb5)
-    drop-shadow(0 4px 0 #979da4)
-    drop-shadow(0 8px 8px rgba(38,44,50,.16));
-  text-shadow: 0 1px 0 rgba(255,255,255,.78);
+    drop-shadow(0 3px 0 #adb3b9)
+    drop-shadow(0 6px 0 #92999f)
+    drop-shadow(0 9px 0 #7f868d)
+    drop-shadow(0 14px 12px rgba(38,44,50,.20));
+  text-shadow: 0 1px 0 rgba(255,255,255,.82);
   font: 800 9.5px/1 Inter,ui-sans-serif,system-ui,sans-serif !important;
   letter-spacing: .11em !important;
   text-transform: uppercase;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
+  clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 100%, 0 100%);
   cursor: pointer;
   pointer-events: auto !important;
   user-select: none;
@@ -37,29 +39,55 @@
 .preview-shell .admin-label:hover,
 .preview-shell .admin-label:focus-visible {
   color: #111417 !important;
-  background: linear-gradient(160deg,#ffffff 0%,#eceff1 36%,#cbd0d5 62%,#f7f8f9 100%) !important;
+  background:
+    linear-gradient(160deg,#ffffff 0%,#edf0f2 36%,#c8ced4 62%,#fafbfc 100%) padding-box,
+    linear-gradient(145deg,#ffffff 0%,#d8dde2 22%,#8a9299 52%,#b8bec4 72%,#ffffff 100%) border-box !important;
   transform: translateX(-50%) translateY(-2px);
   filter:
-    drop-shadow(0 2px 0 #b1b7bd)
-    drop-shadow(0 4px 0 #a1a7ad)
-    drop-shadow(0 8px 8px rgba(38,44,50,.15));
+    drop-shadow(0 3px 0 #b5bbc1)
+    drop-shadow(0 6px 0 #9da4aa)
+    drop-shadow(0 9px 0 #878e95)
+    drop-shadow(0 14px 11px rgba(38,44,50,.18));
   outline: none;
 }
 
 .preview-shell .admin-label:focus-visible {
   box-shadow:
-    0 0 0 3px rgba(128,136,145,.20),
-    inset 0 1px 0 rgba(255,255,255,.98),
-    inset 0 -2px 0 rgba(90,98,106,.22),
-    inset 1px 0 0 rgba(255,255,255,.34) !important;
+    0 0 0 3px rgba(128,136,145,.22),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -2px 0 rgba(75,83,91,.28) !important;
 }
 
 .preview-shell .admin-label:active {
-  transform: translateX(-50%) translateY(2px);
+  transform: translateX(-50%) translateY(3px);
   filter:
-    drop-shadow(0 1px 0 #9da3a9)
-    drop-shadow(0 3px 0 #8e949b)
-    drop-shadow(0 5px 6px rgba(38,44,50,.15));
+    drop-shadow(0 2px 0 #9ea5ab)
+    drop-shadow(0 4px 0 #899097)
+    drop-shadow(0 7px 7px rgba(38,44,50,.17));
+}
+
+/* Legacy control is removed by auth JS; this keeps it invisible even before JS runs. */
+.preview-shell .rail button[data-panel="Settings"] {
+  display: none !important;
+}
+
+/* Everything except the Admin Console verification trigger stays locked until Supabase confirms an admin session. */
+html:not([data-admin-access="unlocked"]) .preview-shell .rail button,
+html:not([data-admin-access="unlocked"]) .preview-shell .analytics-menu button {
+  pointer-events: none !important;
+  cursor: default !important;
+  opacity: .44 !important;
+  transform: none !important;
+  filter:
+    grayscale(.18)
+    drop-shadow(0 2px 0 #aeb3b8)
+    drop-shadow(0 5px 0 #979da3)
+    drop-shadow(0 10px 9px rgba(38,44,50,.11)) !important;
+}
+
+html[data-admin-access="unlocked"] .preview-shell .rail button,
+html[data-admin-access="unlocked"] .preview-shell .analytics-menu button {
+  opacity: 1;
 }
 
 .admin-verification-backdrop {
@@ -162,9 +190,10 @@
   .preview-shell .admin-label {
     top: -48px !important;
     min-width: 108px;
-    min-height: 32px;
-    padding: 9px 15px !important;
+    min-height: 34px;
+    padding: 8px 15px !important;
     font-size: 9px !important;
-    clip-path: polygon(9px 0, calc(100% - 9px) 0, 100% 100%, 0 100%);
+    border-width: 4px !important;
+    clip-path: polygon(17px 0, calc(100% - 17px) 0, 100% 100%, 0 100%);
   }
 }

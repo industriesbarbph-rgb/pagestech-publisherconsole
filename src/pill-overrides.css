@@ -91,10 +91,6 @@
   font-weight: 800;
 }
 
-.preview-shell .rail button[data-panel="Settings"] {
-  clip-path: polygon(0 0,92% 0,100% 18%,94% 50%,100% 82%,92% 100%,0 100%,6% 50%);
-}
-
 .preview-shell .analytics-menu {
   bottom: 112px !important;
   gap: 14px !important;
@@ -119,57 +115,146 @@
   font-size: clamp(38px,4vw,54px);
 }
 
-/* Make the silver reflection visibly travel across the publisher title. */
+/* Dramatic, polished silver light choreography across the publisher identity. */
+.preview-shell::before {
+  content: '';
+  position: fixed;
+  z-index: 0;
+  inset: -22%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 45%,rgba(255,255,255,.78) 0 3%,rgba(222,226,231,.30) 9%,transparent 22%),
+    radial-gradient(circle at 82% 54%,rgba(255,255,255,.70) 0 2%,rgba(201,207,214,.22) 10%,transparent 24%);
+  filter: blur(10px);
+  opacity: .72;
+  transform: translate3d(-6%,0,0) scale(1.02);
+  animation: ambientSilverDrift 11s cubic-bezier(.42,0,.2,1) infinite alternate;
+}
+
 .preview-shell .publisher-name,
 .preview-shell .publisher-word {
   background-image: linear-gradient(
-    112deg,
-    #d7dbe0 0%,
-    #f8fafc 12%,
-    #9ea4ab 25%,
-    #e7eaee 38%,
-    #ffffff 47%,
-    #ffffff 52%,
-    #b3b9c0 61%,
-    #4b5056 74%,
-    #d8dde2 87%,
-    #f9fafb 100%
+    108deg,
+    #555b61 0%,
+    #c8cdd2 10%,
+    #ffffff 19%,
+    #8e959c 30%,
+    #e3e7eb 39%,
+    #ffffff 46%,
+    #ffffff 50%,
+    #b6bcc3 58%,
+    #666d74 69%,
+    #e8ebee 82%,
+    #ffffff 91%,
+    #7e858c 100%
   ) !important;
-  background-size: 260% 100% !important;
-  background-position: 110% 50%;
+  background-size: 360% 100% !important;
+  background-position: 130% 50%;
   animation:
-    publisherTextSweep 8s cubic-bezier(.42,0,.18,1) infinite,
-    breathingGlow 8s ease-in-out infinite !important;
+    publisherTextSweep 6.4s cubic-bezier(.34,.02,.18,1) infinite,
+    breathingGlow 6.4s ease-in-out infinite !important;
+  filter:
+    drop-shadow(0 0 2px rgba(255,255,255,.55))
+    drop-shadow(0 10px 18px rgba(70,78,86,.08));
   will-change: background-position, filter;
 }
 
 .preview-shell .publisher-title::after {
-  width: 30% !important;
-  left: -34% !important;
+  width: 18% !important;
+  left: -30% !important;
+  top: -22% !important;
+  bottom: -24% !important;
   opacity: 0 !important;
+  border-radius: 46% !important;
   background: linear-gradient(
-    100deg,
+    98deg,
     transparent 0%,
-    rgba(255,255,255,.10) 20%,
-    rgba(255,255,255,.68) 48%,
-    rgba(214,219,225,.24) 70%,
+    rgba(255,255,255,.08) 16%,
+    rgba(255,255,255,.48) 34%,
+    rgba(255,255,255,.98) 50%,
+    rgba(218,223,229,.48) 66%,
+    rgba(255,255,255,.08) 82%,
     transparent 100%
   ) !important;
-  filter: blur(13px) !important;
-  animation: publisherReflection 8s cubic-bezier(.42,0,.18,1) infinite !important;
+  filter: blur(7px) !important;
+  transform: skewX(-13deg) !important;
+  animation: publisherReflection 6.4s cubic-bezier(.34,.02,.18,1) infinite !important;
 }
 
+.preview-shell .publisher-title::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  top: -38%;
+  bottom: -40%;
+  left: -46%;
+  width: 42%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center,rgba(255,255,255,.74) 0%,rgba(230,234,238,.30) 38%,transparent 72%);
+  filter: blur(22px);
+  opacity: 0;
+  animation: publisherHalo 6.4s cubic-bezier(.34,.02,.18,1) infinite;
+}
+
+.preview-shell .publisher-atmosphere i {
+  width: 4px !important;
+  height: 4px !important;
+  background: rgba(255,255,255,.98) !important;
+  box-shadow:
+    0 0 8px rgba(255,255,255,.88),
+    0 0 18px rgba(198,205,213,.48),
+    0 0 34px rgba(170,179,188,.22) !important;
+  animation-name: luxuryParticleDrift !important;
+  animation-timing-function: cubic-bezier(.37,0,.2,1) !important;
+}
+.preview-shell .publisher-atmosphere i:nth-child(1){animation-duration:12s!important;animation-delay:-1s!important}
+.preview-shell .publisher-atmosphere i:nth-child(2){animation-duration:15s!important;animation-delay:-8s!important}
+.preview-shell .publisher-atmosphere i:nth-child(3){animation-duration:13s!important;animation-delay:-5s!important}
+.preview-shell .publisher-atmosphere i:nth-child(4){animation-duration:17s!important;animation-delay:-11s!important}
+.preview-shell .publisher-atmosphere i:nth-child(5){animation-duration:14s!important;animation-delay:-3s!important}
+.preview-shell .publisher-atmosphere i:nth-child(6){animation-duration:18s!important;animation-delay:-13s!important}
+.preview-shell .publisher-atmosphere i:nth-child(7){animation-duration:16s!important;animation-delay:-6s!important}
+.preview-shell .publisher-atmosphere i:nth-child(8){animation-duration:13.5s!important;animation-delay:-10s!important}
+
 @keyframes publisherTextSweep {
-  0%, 10% { background-position: 110% 50%; }
-  90%, 100% { background-position: -110% 50%; }
+  0%, 8% { background-position: 130% 50%; }
+  42% { background-position: 34% 50%; }
+  66% { background-position: -38% 50%; }
+  88%, 100% { background-position: -130% 50%; }
 }
 
 @keyframes publisherReflection {
-  0%, 8% { left: -34%; opacity: 0; }
-  18% { opacity: .24; }
-  48% { opacity: .66; }
-  76% { opacity: .24; }
-  90%, 100% { left: 104%; opacity: 0; }
+  0%, 7% { left: -30%; opacity: 0; }
+  17% { opacity: .24; }
+  37% { opacity: .74; }
+  49% { opacity: .98; }
+  63% { opacity: .54; }
+  80% { opacity: .16; }
+  91%, 100% { left: 112%; opacity: 0; }
+}
+
+@keyframes publisherHalo {
+  0%, 8% { left: -46%; opacity: 0; transform: scale(.82); }
+  30% { opacity: .42; }
+  50% { opacity: .82; transform: scale(1.12); }
+  72% { opacity: .30; }
+  92%, 100% { left: 102%; opacity: 0; transform: scale(.88); }
+}
+
+@keyframes ambientSilverDrift {
+  0% { transform: translate3d(-7%,-1%,0) scale(1.02); opacity: .56; }
+  45% { opacity: .88; }
+  100% { transform: translate3d(7%,1%,0) scale(1.07); opacity: .68; }
+}
+
+@keyframes luxuryParticleDrift {
+  0%,100% { opacity: 0; transform: translate3d(-18px,18px,0) scale(.55); }
+  12% { opacity: .14; }
+  34% { opacity: .62; transform: translate3d(3px,-10px,0) scale(.9); }
+  52% { opacity: .94; transform: translate3d(16px,-28px,0) scale(1.18); }
+  70% { opacity: .42; transform: translate3d(27px,-48px,0) scale(.88); }
+  88% { opacity: 0; transform: translate3d(40px,-72px,0) scale(.58); }
 }
 
 @media (max-width: 860px) {
@@ -187,9 +272,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .preview-shell::before,
   .preview-shell .publisher-name,
   .preview-shell .publisher-word,
-  .preview-shell .publisher-title::after {
+  .preview-shell .publisher-title::before,
+  .preview-shell .publisher-title::after,
+  .preview-shell .publisher-atmosphere i {
     animation: none !important;
   }
 }
