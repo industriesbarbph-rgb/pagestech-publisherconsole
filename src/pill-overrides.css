@@ -115,7 +115,7 @@
   font-size: clamp(38px,4vw,54px);
 }
 
-/* Restrained publisher lighting: one deliberate silver sweep, long quiet pause. */
+/* Glossy publisher lighting: one slow, soft sheen with a long still interval. */
 .preview-shell::before {
   content: '';
   position: fixed;
@@ -123,59 +123,72 @@
   inset: -22%;
   pointer-events: none;
   background:
-    radial-gradient(circle at 20% 45%,rgba(255,255,255,.54) 0 3%,rgba(222,226,231,.18) 10%,transparent 24%),
-    radial-gradient(circle at 80% 54%,rgba(255,255,255,.46) 0 2%,rgba(201,207,214,.14) 11%,transparent 26%);
-  filter: blur(14px);
-  opacity: .46;
+    radial-gradient(circle at 24% 46%,rgba(255,255,255,.46) 0 4%,rgba(226,230,234,.14) 12%,transparent 27%),
+    radial-gradient(circle at 76% 53%,rgba(255,255,255,.38) 0 3%,rgba(205,211,217,.11) 12%,transparent 28%);
+  filter: blur(18px);
+  opacity: .40;
   transform: translate3d(0,0,0) scale(1.03);
   animation: none !important;
 }
 
 .preview-shell .publisher-name,
 .preview-shell .publisher-word {
-  background-image: linear-gradient(
-    108deg,
-    #656b71 0%,
-    #c7ccd1 12%,
-    #f8fafc 21%,
-    #9ca3aa 32%,
-    #e4e7ea 43%,
-    #ffffff 49%,
-    #c1c6cc 58%,
-    #767d84 70%,
-    #e6e9ec 84%,
-    #f9fafb 93%,
-    #848b92 100%
-  ) !important;
-  background-size: 320% 100% !important;
-  background-position: 120% 50%;
-  animation: publisherTextSweep 16s cubic-bezier(.42,0,.22,1) infinite !important;
+  background-image:
+    linear-gradient(
+      102deg,
+      transparent 0%,
+      transparent 37%,
+      rgba(255,255,255,.10) 43%,
+      rgba(255,255,255,.34) 47%,
+      rgba(255,255,255,.92) 50%,
+      rgba(255,255,255,.38) 53%,
+      rgba(255,255,255,.10) 58%,
+      transparent 64%,
+      transparent 100%
+    ),
+    linear-gradient(
+      108deg,
+      #62686e 0%,
+      #c7ccd1 12%,
+      #f7f9fb 21%,
+      #9aa1a8 32%,
+      #e2e6e9 43%,
+      #ffffff 49%,
+      #c0c5cb 58%,
+      #747b82 70%,
+      #e5e8eb 84%,
+      #f9fafb 93%,
+      #828990 100%
+    ) !important;
+  background-size: 240% 100%, 100% 100% !important;
+  background-position: 125% 50%, 0 50%;
+  animation: glossyTextSheen 20s cubic-bezier(.45,0,.2,1) infinite !important;
   filter:
-    drop-shadow(0 0 2px rgba(255,255,255,.44))
+    drop-shadow(0 0 2px rgba(255,255,255,.42))
     drop-shadow(0 10px 18px rgba(70,78,86,.07));
   will-change: background-position;
 }
 
 .preview-shell .publisher-title::after {
-  width: 16% !important;
-  left: -28% !important;
-  top: -20% !important;
-  bottom: -22% !important;
+  width: 22% !important;
+  left: -30% !important;
+  top: -22% !important;
+  bottom: -24% !important;
   opacity: 0 !important;
-  border-radius: 48% !important;
+  border-radius: 50% !important;
   background: linear-gradient(
-    98deg,
+    100deg,
     transparent 0%,
-    rgba(255,255,255,.05) 20%,
-    rgba(255,255,255,.32) 38%,
-    rgba(255,255,255,.68) 50%,
-    rgba(218,223,229,.30) 64%,
-    rgba(255,255,255,.05) 82%,
+    rgba(255,255,255,.04) 18%,
+    rgba(255,255,255,.20) 36%,
+    rgba(255,255,255,.50) 50%,
+    rgba(222,226,231,.20) 64%,
+    rgba(255,255,255,.04) 82%,
     transparent 100%
   ) !important;
-  filter: blur(10px) !important;
-  transform: skewX(-12deg) !important;
-  animation: publisherReflection 16s cubic-bezier(.42,0,.22,1) infinite !important;
+  filter: blur(14px) !important;
+  transform: skewX(-10deg) !important;
+  animation: glossyReflection 20s cubic-bezier(.45,0,.2,1) infinite !important;
 }
 
 .preview-shell .publisher-title::before {
@@ -188,9 +201,9 @@
   width: 48%;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(ellipse at center,rgba(255,255,255,.50) 0%,rgba(230,234,238,.18) 40%,transparent 74%);
-  filter: blur(24px);
-  opacity: .26;
+  background: radial-gradient(ellipse at center,rgba(255,255,255,.46) 0%,rgba(230,234,238,.16) 40%,transparent 74%);
+  filter: blur(26px);
+  opacity: .24;
   animation: none !important;
 }
 
@@ -199,18 +212,18 @@
   animation: none !important;
 }
 
-@keyframes publisherTextSweep {
-  0%, 10% { background-position: 120% 50%; }
-  34% { background-position: -120% 50%; }
-  34.01%, 100% { background-position: -120% 50%; }
+@keyframes glossyTextSheen {
+  0%, 12% { background-position: 125% 50%, 0 50%; }
+  38% { background-position: -125% 50%, 0 50%; }
+  38.01%, 100% { background-position: -125% 50%, 0 50%; }
 }
 
-@keyframes publisherReflection {
-  0%, 10% { left: -28%; opacity: 0; }
-  15% { opacity: .14; }
-  23% { opacity: .46; }
-  30% { opacity: .18; }
-  34%, 100% { left: 108%; opacity: 0; }
+@keyframes glossyReflection {
+  0%, 12% { left: -30%; opacity: 0; }
+  18% { opacity: .08; }
+  27% { opacity: .30; }
+  34% { opacity: .16; }
+  38%, 100% { left: 108%; opacity: 0; }
 }
 
 @media (max-width: 860px) {
