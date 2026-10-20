@@ -1,0 +1,96 @@
+.preview-shell .rail-all {
+  gap: 12px !important;
+  bottom: 12px !important;
+  border-radius: 0 !important;
+}
+
+.preview-shell .rail button,
+.preview-shell .analytics-menu button {
+  position: relative;
+  min-height: 58px;
+  padding: 18px 24px !important;
+  border: 1px solid rgba(231, 235, 240, .72) !important;
+  color: #f4f6f8 !important;
+  background:
+    linear-gradient(145deg, #454a50 0%, #2f3439 38%, #1e2227 72%, #3a4046 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -2px 0 rgba(0,0,0,.28),
+    0 10px 26px rgba(17,24,39,.18) !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.38);
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: .055em !important;
+  line-height: 1 !important;
+  border-radius: 0 !important;
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease !important;
+  overflow: hidden;
+}
+
+.preview-shell .rail button:hover,
+.preview-shell .rail button.is-active,
+.preview-shell .analytics-menu button:hover,
+.preview-shell .analytics-menu button:focus-visible {
+  color: #171a1e !important;
+  background:
+    linear-gradient(145deg, #f4f5f6 0%, #cfd3d7 28%, #aeb4ba 58%, #e9ebed 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -2px 0 rgba(73,80,87,.28),
+    0 14px 34px rgba(17,24,39,.22) !important;
+  transform: translateY(-2px);
+}
+
+.preview-shell .rail button:focus-visible,
+.preview-shell .analytics-menu button:focus-visible {
+  outline: 2px solid rgba(157, 166, 176, .9);
+  outline-offset: 3px;
+}
+
+.preview-shell .rail button[data-panel="Book Pages"] {
+  clip-path: polygon(9% 0, 100% 0, 100% 78%, 91% 100%, 0 100%, 0 22%);
+}
+
+.preview-shell .rail button[data-panel="Analytics"] {
+  clip-path: polygon(0 0, 88% 0, 100% 22%, 100% 78%, 88% 100%, 0 100%, 7% 50%);
+}
+
+.preview-shell .rail button[data-panel="Payments"] {
+  clip-path: polygon(7% 0, 93% 0, 100% 50%, 93% 100%, 7% 100%, 0 50%);
+}
+
+.preview-shell .rail button[data-panel="Sales"] {
+  clip-path: polygon(0 0, 100% 0, 92% 28%, 100% 58%, 92% 100%, 0 100%, 7% 68%, 0 38%);
+}
+
+.preview-shell .rail button[data-panel="Platform"] {
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 12% 100%, 0 78%, 0 22%);
+}
+
+.preview-shell .rail button[data-panel="Settings"] {
+  clip-path: polygon(0 0, 92% 0, 100% 18%, 94% 50%, 100% 82%, 92% 100%, 0 100%, 6% 50%);
+}
+
+.preview-shell .analytics-menu {
+  bottom: 86px !important;
+  gap: 12px !important;
+}
+
+.preview-shell .analytics-menu button[data-analytics="Users"] {
+  min-width: 116px;
+  clip-path: polygon(12% 0, 100% 0, 92% 50%, 100% 100%, 12% 100%, 0 50%);
+}
+
+.preview-shell .analytics-menu button[data-analytics="SEO"] {
+  min-width: 116px;
+  clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%, 8% 50%);
+}
+
+@media (max-width: 860px) {
+  .preview-shell .rail button,
+  .preview-shell .analytics-menu button {
+    min-height: 52px;
+    padding: 16px 20px !important;
+  }
+  .preview-shell .analytics-menu { bottom: 80px !important; }
+}
