@@ -1,367 +1,57 @@
 import './styles.css'
 
-const brandStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap');
-
-  .preview-shell {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 0;
-    overflow: hidden;
-    isolation: isolate;
-    background:
-      radial-gradient(circle at 50% 46%, rgba(255,255,255,1) 0 24%, rgba(249,250,251,.98) 46%, rgba(239,241,244,.9) 100%);
-  }
-
-  .publisher-identity {
-    position: relative;
-    z-index: 1;
-    width: min(88vw, 1220px);
-    display: grid;
-    place-items: center;
-    text-align: center;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .publisher-title {
-    margin: 0;
-    display: grid;
-    place-items: center;
-    gap: clamp(10px, 1.4vw, 18px);
-    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-    font-weight: 600;
-    line-height: .86;
-    letter-spacing: -.045em;
-  }
-
-  .publisher-name,
-  .publisher-word {
-    display: block;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    background-image:
-      radial-gradient(circle at 12% 26%, rgba(255,255,255,.95) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 38% 72%, rgba(255,255,255,.78) 0 1px, transparent 1.6px),
-      radial-gradient(circle at 61% 28%, rgba(255,255,255,.9) 0 1px, transparent 1.7px),
-      radial-gradient(circle at 86% 64%, rgba(255,255,255,.72) 0 1px, transparent 1.6px),
-      linear-gradient(108deg,
-        #0c0e12 0%,
-        #454a50 11%,
-        #d9dde2 23%,
-        #ffffff 31%,
-        #8b9198 42%,
-        #171a1f 55%,
-        #f8fafc 70%,
-        #a4a9af 80%,
-        #2b2f34 91%,
-        #0b0d10 100%);
-    background-size: 240px 150px, 290px 180px, 330px 220px, 380px 240px, 220% 100%;
-    filter:
-      drop-shadow(0 0 5px rgba(255,255,255,.6))
-      drop-shadow(0 10px 20px rgba(17,24,39,.12));
-    animation: silverSweep 10s ease-in-out infinite alternate;
-  }
-
-  .publisher-name {
-    font-size: clamp(68px, 10.7vw, 156px);
-    white-space: nowrap;
-  }
-
-  .publisher-word {
-    font-size: clamp(28px, 3.8vw, 54px);
-    font-weight: 500;
-    letter-spacing: .28em;
-    padding-left: .28em;
-    line-height: 1.08;
-  }
-
-  .publisher-sparkle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.92);
-    box-shadow:
-      128px -46px 0 rgba(255,255,255,.65),
-      -172px 62px 0 rgba(255,255,255,.58),
-      238px 52px 0 rgba(255,255,255,.5),
-      -286px -38px 0 rgba(255,255,255,.44),
-      338px -18px 0 rgba(255,255,255,.36);
-    filter: drop-shadow(0 0 5px rgba(255,255,255,.85));
-    opacity: .72;
-    animation: softTwinkle 4.8s ease-in-out infinite alternate;
-  }
-
-  .preview-panel-layer {
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    pointer-events: none;
-  }
-
-  .preview-panel {
-    position: absolute;
-    top: 24px;
-    bottom: 24px;
-    width: min(510px, calc(100vw - 48px));
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 24px;
-    padding: 30px;
-    border: 1px solid rgba(17,24,39,.08);
-    border-radius: 30px;
-    background: rgba(255,255,255,.94);
-    box-shadow: 0 30px 90px rgba(17,24,39,.14);
-    backdrop-filter: blur(24px) saturate(135%);
-    -webkit-backdrop-filter: blur(24px) saturate(135%);
-    pointer-events: auto;
-    opacity: 0;
-  }
-
-  .preview-panel[data-side="left"] {
-    left: 24px;
-    transform: translateX(calc(-100% - 40px));
-  }
-
-  .preview-panel[data-side="right"] {
-    right: 24px;
-    transform: translateX(calc(100% + 40px));
-  }
-
-  .preview-panel.is-open[data-side="left"],
-  .preview-panel.is-open[data-side="right"] {
-    transform: translateX(0);
-    opacity: 1;
-    transition: transform .34s cubic-bezier(.22,.8,.24,1), opacity .22s ease;
-  }
-
-  .preview-panel-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .preview-panel-kicker {
-    margin: 0 0 7px;
-    color: #98a2b3;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-  }
-
-  .preview-panel-title {
-    margin: 0;
-    color: #111827;
-    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-    font-size: clamp(38px, 4vw, 54px);
-    font-weight: 600;
-    letter-spacing: -.035em;
-    line-height: .95;
-  }
-
-  .preview-panel-close {
-    width: 40px;
-    height: 40px;
-    flex: 0 0 40px;
-    border: 1px solid #e5e7eb;
-    border-radius: 50%;
-    background: #fff;
-    color: #475467;
-    font-size: 23px;
-    line-height: 1;
-  }
-
-  .preview-panel-body {
-    display: grid;
-    place-items: center;
-    align-content: center;
-    min-height: 0;
-    padding: 28px;
-    border: 1px dashed #d0d5dd;
-    border-radius: 22px;
-    color: #667085;
-    text-align: center;
-    line-height: 1.65;
-  }
-
-  .preview-panel-body strong {
-    display: block;
-    margin-bottom: 6px;
-    color: #344054;
-    font-size: 14px;
-  }
-
-  .rail button.is-active {
-    background: #f2f4f7;
-    color: #111827;
-  }
-
-  @keyframes silverSweep {
-    from { background-position: 0 0, 0 0, 0 0, 0 0, 8% 50%; }
-    to { background-position: 32px -12px, -24px 20px, 18px 28px, -14px -20px, 92% 50%; }
-  }
-
-  @keyframes softTwinkle {
-    0%, 35% { opacity: .28; transform: scale(.9); }
-    70%, 100% { opacity: .78; transform: scale(1.18); }
-  }
-
-  @media (max-width: 860px) {
-    .preview-shell { padding: 96px 18px 104px; }
-    .publisher-name { white-space: normal; font-size: clamp(58px, 15vw, 96px); line-height: .9; }
-    .publisher-word { font-size: clamp(25px, 7vw, 40px); letter-spacing: .2em; padding-left: .2em; }
-    .publisher-sparkle { transform: scale(.8); }
-    .preview-panel { top: 12px; bottom: 12px; width: min(470px, calc(100vw - 24px)); padding: 24px; }
-    .preview-panel[data-side="left"] { left: 12px; }
-    .preview-panel[data-side="right"] { right: 12px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .publisher-name,
-    .publisher-word,
-    .publisher-sparkle { animation: none; }
-    .preview-panel { transition: none !important; }
-  }
+const styles = `
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap');
+.preview-shell{min-height:100vh;display:grid;place-items:center;padding:0;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 50% 46%,#fff 0 24%,rgba(249,250,251,.98) 46%,rgba(239,241,244,.9) 100%)}
+.publisher-identity{position:relative;z-index:1;width:min(88vw,1220px);display:grid;place-items:center;text-align:center;pointer-events:none;user-select:none}
+.publisher-title{margin:0;display:grid;place-items:center;gap:clamp(8px,1vw,14px);font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-weight:600;line-height:.98;letter-spacing:-.045em;overflow:visible}
+.publisher-name,.publisher-word{display:block;color:transparent;-webkit-text-fill-color:transparent;-webkit-background-clip:text;background-clip:text;background-image:linear-gradient(108deg,#f9fafb 0%,#c7ccd2 16%,#fff 31%,#8b9198 43%,#eceff2 56%,#111418 66%,#d9dde2 78%,#fff 90%,#b7bcc2 100%);background-size:260% 100%;filter:drop-shadow(0 0 4px rgba(255,255,255,.72)) drop-shadow(0 10px 20px rgba(17,24,39,.10));animation:metalShift 12s ease-in-out infinite}
+.publisher-name{font-size:clamp(68px,10.7vw,156px);white-space:nowrap}
+.publisher-word{font-size:clamp(28px,3.8vw,54px);font-weight:500;letter-spacing:.28em;padding:.08em .02em .22em .30em;line-height:1.22;overflow:visible}
+.admin-label{margin-top:5px;font:700 10px/1 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.26em;text-transform:uppercase;color:#667085}
+@keyframes metalShift{0%,22%{background-position:8% 50%}38%,58%{background-position:55% 50%}72%,100%{background-position:96% 50%}}
+.rail{background:transparent;border:0;box-shadow:none;backdrop-filter:none;padding:0;gap:10px}
+.rail button{background:rgba(255,255,255,.88);border:1px solid rgba(17,24,39,.09);box-shadow:0 10px 30px rgba(17,24,39,.07);padding:10px 14px;border-radius:999px;color:#475467}
+.rail button:hover,.rail button.is-active{background:#fff;color:#111827;box-shadow:0 14px 38px rgba(17,24,39,.10)}
+.analytics-menu{position:fixed;top:124px;left:50%;transform:translateX(-50%);z-index:24;display:flex;gap:10px;opacity:0;pointer-events:none;transition:.2s ease}
+.analytics-menu.is-open{opacity:1;pointer-events:auto}
+.analytics-menu button{border:1px solid rgba(17,24,39,.09);background:#fff;color:#344054;border-radius:999px;padding:10px 16px;font-size:11px;font-weight:800;box-shadow:0 10px 30px rgba(17,24,39,.08)}
+.preview-panel-layer{position:fixed;inset:0;z-index:40;pointer-events:none}
+.preview-panel{position:absolute;top:24px;bottom:24px;width:min(560px,calc(100vw - 48px));padding:30px;border:1px solid rgba(17,24,39,.08);border-radius:30px;background:rgba(255,255,255,.96);box-shadow:0 30px 90px rgba(17,24,39,.14);backdrop-filter:blur(24px) saturate(135%);pointer-events:auto;opacity:0;overflow:auto}
+.preview-panel[data-side='left']{left:24px;transform:translateX(calc(-100% - 40px))}.preview-panel[data-side='right']{right:24px;transform:translateX(calc(100% + 40px))}
+.preview-panel.is-open{transform:translateX(0);opacity:1;transition:transform .34s cubic-bezier(.22,.8,.24,1),opacity .22s ease}
+.preview-panel-header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px}.preview-panel-kicker{margin:0 0 7px;color:#98a2b3;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.preview-panel-title{margin:0;color:#111827;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(38px,4vw,54px);font-weight:600;letter-spacing:-.035em;line-height:.95}.preview-panel-close{width:40px;height:40px;border:1px solid #e5e7eb;border-radius:50%;background:#fff;color:#475467;font-size:23px}
+.module-status{display:inline-flex;margin-bottom:14px;padding:7px 10px;border-radius:999px;background:#f2f4f7;color:#667085;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.module-copy{color:#667085;line-height:1.7}.module-copy strong{display:block;color:#344054;margin:16px 0 8px}.module-copy ul{margin:0;padding-left:20px}.module-copy li{margin:6px 0}
+.library-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.library-toolbar input,.library-toolbar select{border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;background:#fff;color:#344054}.library-toolbar input{flex:1;min-width:190px}.library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.book-card{border:1px solid #e5e7eb;border-radius:20px;padding:16px;background:#fff;display:grid;gap:10px}.book-cover{aspect-ratio:3/4;border-radius:14px;background:linear-gradient(145deg,#f8fafc,#eef2f6);display:grid;place-items:center;color:#98a2b3;font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;text-align:center;padding:16px}.book-meta{display:grid;gap:4px}.book-meta strong{color:#111827}.book-meta span{color:#667085;font-size:12px}.book-actions{display:flex;gap:8px}.book-actions button,.add-book{border:1px solid #e5e7eb;background:#fff;color:#344054;border-radius:11px;padding:8px 10px;font-size:11px;font-weight:800}.add-book{grid-column:1/-1;border-style:dashed;min-height:70px}.purchase-list{display:grid;gap:10px}.purchase-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border-bottom:1px solid #eef0f2;padding:10px 0}.purchase-row b{font-size:12px}.purchase-row span{font-size:12px;color:#667085}.purchase-row em{font-style:normal;font-size:11px;color:#475467;background:#f2f4f7;border-radius:999px;padding:6px 8px}
+@media(max-width:860px){.publisher-name{white-space:normal;font-size:clamp(58px,15vw,96px);line-height:.95}.publisher-word{font-size:clamp(25px,7vw,40px);letter-spacing:.2em}.preview-panel{top:12px;bottom:12px;width:min(470px,calc(100vw - 24px));padding:24px}.preview-panel[data-side='left']{left:12px}.preview-panel[data-side='right']{right:12px}.library-grid{grid-template-columns:1fr}.analytics-menu{top:auto;bottom:110px}.rail-left,.rail-right{display:flex}}
+@media(prefers-reduced-motion:reduce){.publisher-name,.publisher-word{animation:none}.preview-panel{transition:none!important}}
 `
 
-const panelSides = {
-  Analytics: 'left',
-  'Book Pages': 'left',
-  Payments: 'left',
-  Settings: 'left',
-  SEO: 'right',
-  Customers: 'right',
-  Sales: 'right',
-  Business: 'right',
+const moduleCopy = {
+  Payments: {status:'In Development', purpose:'Handle money-related operations without exposing reader data unless there is a concrete reason.', bullets:['Search a specific transaction','Refund and payment-status tools','Full email only when needed for payment or access support','Payment provider settings and verification']},
+  Sales: {status:'Planned Feature', purpose:'A clean commercial view of what is selling and how revenue is moving.', bullets:['Sales by title','Revenue trends','Units sold','Currency and market summaries']},
+  Platform: {status:'On the Roadmap', purpose:'Track the services that keep the publishing platform running.', bullets:['Supabase plan and billing','Domain renewals','Hosting and storage','Email and other infrastructure services','Renewal reminders and usage notices']},
+  Settings: {status:'Being Prepared', purpose:'Configure the console itself without mixing settings with business data.', bullets:['Publisher profile and branding','Notifications','Security and team access','Default console preferences']},
+  SEO: {status:'Future Module', purpose:'Search-performance analytics for how readers discover the publishing site.', bullets:['Search impressions and clicks','Queries and ranking trends','Indexing visibility','Search traffic over time']},
 }
 
-function navButton(label) {
-  return `<button type="button" data-panel="${label}" data-side="${panelSides[label]}">${label}</button>`
-}
+const books = [
+  'Book One',
+  'Book Two',
+  'Book Three',
+  'Book Four',
+]
 
-function rails() {
-  return `
-    <nav class="rail rail-left" aria-label="Content navigation">
-      ${navButton('Book Pages')}
-      ${navButton('Customers')}
-    </nav>
-    <nav class="rail rail-right" aria-label="Commerce navigation">
-      ${navButton('Payments')}
-      ${navButton('Sales')}
-    </nav>
-    <nav class="rail rail-top" aria-label="Insights navigation">
-      ${navButton('Analytics')}
-      ${navButton('SEO')}
-    </nav>
-    <nav class="rail rail-bottom" aria-label="Business navigation">
-      ${navButton('Settings')}
-      ${navButton('Business')}
-    </nav>
-  `
-}
-
-function publisherIdentity() {
-  return `
-    <section class="publisher-identity" aria-label="Victoria P. Carlos Publishing">
-      <span class="publisher-sparkle" aria-hidden="true"></span>
-      <h1 class="publisher-title">
-        <span class="publisher-name">Victoria P. Carlos</span>
-        <span class="publisher-word">Publishing</span>
-      </h1>
-    </section>
-  `
-}
-
-function panelMarkup() {
-  return `
-    <div class="preview-panel-layer" aria-live="polite"></div>
-  `
-}
-
-function closePanel() {
-  const layer = document.querySelector('.preview-panel-layer')
-  const panel = layer?.querySelector('.preview-panel')
-  if (panel) panel.classList.remove('is-open')
-
-  document.querySelectorAll('.rail button').forEach(button => button.classList.remove('is-active'))
-
-  window.setTimeout(() => {
-    if (layer && !layer.querySelector('.preview-panel.is-open')) layer.innerHTML = ''
-  }, 360)
-}
-
-function openPanel(label, side, trigger) {
-  const layer = document.querySelector('.preview-panel-layer')
-  if (!layer) return
-
-  document.querySelectorAll('.rail button').forEach(button => button.classList.remove('is-active'))
-  trigger.classList.add('is-active')
-
-  layer.innerHTML = `
-    <section class="preview-panel" data-side="${side}" aria-label="${label} panel">
-      <header class="preview-panel-header">
-        <div>
-          <p class="preview-panel-kicker">Publisher Console</p>
-          <h2 class="preview-panel-title">${label}</h2>
-        </div>
-        <button class="preview-panel-close" type="button" aria-label="Close ${label} panel">×</button>
-      </header>
-      <div class="preview-panel-body">
-        <div>
-          <strong>${label}</strong>
-          This panel is ready for its workspace content.
-        </div>
-      </div>
-    </section>
-  `
-
-  const panel = layer.querySelector('.preview-panel')
-  requestAnimationFrame(() => panel?.classList.add('is-open'))
-  layer.querySelector('.preview-panel-close')?.addEventListener('click', closePanel)
-}
-
-function bindNavigation() {
-  document.querySelectorAll('.rail button[data-panel]').forEach(button => {
-    button.addEventListener('click', () => {
-      const label = button.dataset.panel
-      const side = button.dataset.side
-      const current = document.querySelector('.preview-panel.is-open')
-
-      if (current) {
-        current.classList.remove('is-open')
-        window.setTimeout(() => openPanel(label, side, button), 210)
-      } else {
-        openPanel(label, side, button)
-      }
-    })
-  })
-
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') closePanel()
-  })
-}
-
-function render() {
-  const style = document.createElement('style')
-  style.id = 'publisher-preview-brand-styles'
-  style.textContent = brandStyles
-  document.head.appendChild(style)
-
-  document.querySelector('#app').innerHTML = `
-    <main class="dashboard-shell preview-shell">
-      ${publisherIdentity()}
-      ${rails()}
-      ${panelMarkup()}
-    </main>
-  `
-
-  bindNavigation()
-}
-
+function publisherIdentity(){return `<section class="publisher-identity" aria-label="Victoria P. Carlos Publishing"><h1 class="publisher-title"><span class="publisher-name">Victoria P. Carlos</span><span class="publisher-word">Publishing</span></h1><div class="admin-label">Admin Console</div></section>`}
+function navButton(label){return `<button type="button" data-panel="${label}">${label}</button>`}
+function rails(){return `<nav class="rail rail-left" aria-label="Content navigation">${navButton('Book Pages')}</nav><nav class="rail rail-right" aria-label="Commerce navigation">${navButton('Payments')}${navButton('Sales')}</nav><nav class="rail rail-top" aria-label="Analytics navigation">${navButton('Analytics')}</nav><nav class="rail rail-bottom" aria-label="System navigation">${navButton('Platform')}${navButton('Settings')}</nav><div class="analytics-menu" aria-label="Analytics options"><button data-analytics="Users">Users</button><button data-analytics="SEO">SEO</button></div>`}
+function sideFor(label){if(label==='Book Pages'||label==='Users'||label==='Settings')return 'left';return 'right'}
+function panelShell(label,side,body,kicker='Publisher Console'){return `<section class="preview-panel" data-side="${side}" aria-label="${label} panel"><header class="preview-panel-header"><div><p class="preview-panel-kicker">${kicker}</p><h2 class="preview-panel-title">${label}</h2></div><button class="preview-panel-close" type="button" aria-label="Close ${label} panel">×</button></header>${body}</section>`}
+function bookPagesBody(){return `<div class="library-toolbar"><input placeholder="Search books or authors" aria-label="Search books"><select aria-label="Filter books"><option>All books</option><option>Published</option><option>Draft</option><option>With audio</option></select></div><div class="library-grid">${books.map((title,i)=>`<article class="book-card"><div class="book-cover">${title}</div><div class="book-meta"><strong>${title}</strong><span>Victoria P. Carlos · ${i===0?'With audio · ':''}Ready for setup</span></div><div class="book-actions"><button>Manage</button><button>Preview</button></div></article>`).join('')}<button class="add-book">＋ Add author or book</button></div>`}
+function usersBody(){return `<span class="module-status">Analytics · Privacy-safe</span><div class="module-copy"><p>Chronological purchase activity without exposing names or full email addresses.</p><strong>Planned data</strong></div><div class="purchase-list"><div class="purchase-row"><b>#001</b><span>08:42 · Book One · ₱— · PHP</span><em>New reader</em></div><div class="purchase-row"><b>#002</b><span>09:17 · Book Three · ₱— · PHP</span><em>Returning</em></div><div class="purchase-row"><b>#003</b><span>10:03 · Book One · ₱— · PHP</span><em>New reader</em></div></div><div class="module-copy"><strong>Also planned</strong><ul><li>Total and active readers</li><li>New versus returning readers</li><li>Most-read books and completion trends</li><li>Audio usage</li></ul></div>`}
+function moduleBody(name){const data=moduleCopy[name];return `<span class="module-status">${data.status}</span><div class="module-copy"><p>${data.purpose}</p><strong>Planned capabilities</strong><ul>${data.bullets.map(x=>`<li>${x}</li>`).join('')}</ul></div>`}
+function closePanel(){const layer=document.querySelector('.preview-panel-layer');const panel=layer?.querySelector('.preview-panel');if(panel)panel.classList.remove('is-open');document.querySelectorAll('.rail button').forEach(b=>b.classList.remove('is-active'));setTimeout(()=>{if(layer&&!layer.querySelector('.preview-panel.is-open'))layer.innerHTML=''},360)}
+function openPanel(label){const layer=document.querySelector('.preview-panel-layer');if(!layer)return;document.querySelectorAll('.rail button').forEach(b=>b.classList.toggle('is-active',b.dataset.panel===label));const side=sideFor(label);const body=label==='Book Pages'?bookPagesBody():label==='Users'?usersBody():moduleBody(label);layer.innerHTML=panelShell(label,side,body,label==='Users'||label==='SEO'?'Analytics':'Publisher Console');const panel=layer.querySelector('.preview-panel');requestAnimationFrame(()=>panel?.classList.add('is-open'));layer.querySelector('.preview-panel-close')?.addEventListener('click',closePanel)}
+function bind(){document.querySelectorAll('.rail button[data-panel]').forEach(button=>button.addEventListener('click',()=>{const label=button.dataset.panel;if(label==='Analytics'){const menu=document.querySelector('.analytics-menu');menu?.classList.toggle('is-open');button.classList.toggle('is-active',menu?.classList.contains('is-open'));return}document.querySelector('.analytics-menu')?.classList.remove('is-open');openPanel(label)}));document.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{document.querySelector('.analytics-menu')?.classList.remove('is-open');openPanel(button.dataset.analytics)}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelector('.analytics-menu')?.classList.remove('is-open');closePanel()}})}
+function render(){const style=document.createElement('style');style.textContent=styles;document.head.appendChild(style);document.querySelector('#app').innerHTML=`<main class="dashboard-shell preview-shell">${publisherIdentity()}${rails()}<div class="preview-panel-layer" aria-live="polite"></div></main>`;bind()}
 render()
