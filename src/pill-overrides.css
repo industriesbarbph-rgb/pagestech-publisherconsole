@@ -115,20 +115,22 @@
   font-size: clamp(38px,4vw,54px);
 }
 
-/* Keep the lettering metallic and still; move the light around it instead. */
+/* Keep the lettering still; make the surrounding light visibly travel. */
 .preview-shell::before {
   content: '';
   position: fixed;
   z-index: 0;
-  inset: -28%;
+  top: 18%;
+  bottom: 18%;
+  left: -34vw;
+  width: 46vw;
   pointer-events: none;
   background:
-    radial-gradient(circle at 30% 45%,rgba(255,255,255,.52) 0 3%,rgba(224,228,232,.16) 10%,transparent 26%),
-    radial-gradient(circle at 72% 55%,rgba(255,255,255,.38) 0 3%,rgba(199,205,211,.11) 11%,transparent 28%);
-  filter: blur(24px);
-  opacity: .42;
-  transform: translate3d(-2.5%,0,0) scale(1.04);
-  animation: ambientLightDrift 18s ease-in-out infinite alternate !important;
+    radial-gradient(ellipse at center,rgba(255,255,255,.90) 0 10%,rgba(202,208,214,.34) 28%,rgba(142,151,160,.14) 48%,transparent 72%);
+  filter: blur(30px);
+  opacity: .78;
+  transform: translate3d(0,0,0) rotate(-8deg);
+  animation: ambientLightDrift 12s cubic-bezier(.45,0,.2,1) infinite !important;
 }
 
 .preview-shell .publisher-name,
@@ -160,16 +162,17 @@
   display: block !important;
   position: absolute;
   z-index: -1;
-  top: -24% !important;
-  bottom: -26% !important;
-  left: 10% !important;
-  width: 26% !important;
+  top: -30% !important;
+  bottom: -32% !important;
+  left: -8% !important;
+  width: 34% !important;
   border-radius: 50% !important;
-  opacity: .18 !important;
-  background: radial-gradient(ellipse at center,rgba(255,255,255,.75) 0%,rgba(226,230,234,.24) 38%,transparent 72%) !important;
-  filter: blur(24px) !important;
-  transform: translate3d(-10px,0,0) !important;
-  animation: titleHaloDrift 14s ease-in-out infinite alternate !important;
+  opacity: .34 !important;
+  background:
+    radial-gradient(ellipse at center,rgba(255,255,255,.88) 0%,rgba(200,207,214,.28) 42%,rgba(135,145,154,.10) 58%,transparent 74%) !important;
+  filter: blur(28px) !important;
+  transform: translate3d(0,0,0) !important;
+  animation: titleHaloDrift 9s ease-in-out infinite alternate !important;
 }
 
 .preview-shell .publisher-title::before {
@@ -219,15 +222,17 @@
 }
 
 @keyframes ambientLightDrift {
-  0% { transform: translate3d(-3%,1%,0) scale(1.04); opacity: .30; }
-  50% { transform: translate3d(1.5%,-1%,0) scale(1.055); opacity: .48; }
-  100% { transform: translate3d(4%,-.5%,0) scale(1.04); opacity: .34; }
+  0% { left: -34vw; opacity: .12; transform: translate3d(0,2%,0) rotate(-8deg) scale(.92); }
+  12% { opacity: .62; }
+  45% { opacity: .82; }
+  78% { opacity: .60; }
+  100% { left: 92vw; opacity: .10; transform: translate3d(0,-2%,0) rotate(-8deg) scale(1.05); }
 }
 
 @keyframes titleHaloDrift {
-  0% { left: 8%; opacity: .10; transform: translate3d(-8px,2px,0) scale(.92); }
-  50% { left: 43%; opacity: .24; transform: translate3d(4px,-3px,0) scale(1.04); }
-  100% { left: 67%; opacity: .12; transform: translate3d(8px,1px,0) scale(.96); }
+  0% { left: -8%; opacity: .16; transform: translate3d(-8px,2px,0) scale(.92); }
+  45% { left: 36%; opacity: .38; transform: translate3d(3px,-2px,0) scale(1.08); }
+  100% { left: 76%; opacity: .18; transform: translate3d(10px,2px,0) scale(.96); }
 }
 
 @media (max-width: 860px) {
@@ -245,6 +250,17 @@
   .preview-shell .admin-label {
     margin-top: -5px !important;
     transform: translateY(-5px) !important;
+  }
+  .preview-shell::before {
+    width: 70vw;
+    left: -54vw;
+  }
+  @keyframes ambientLightDrift {
+    0% { left: -54vw; opacity: .14; transform: translate3d(0,2%,0) rotate(-8deg) scale(.94); }
+    15% { opacity: .58; }
+    50% { opacity: .78; }
+    82% { opacity: .54; }
+    100% { left: 88vw; opacity: .10; transform: translate3d(0,-2%,0) rotate(-8deg) scale(1.04); }
   }
 }
 
