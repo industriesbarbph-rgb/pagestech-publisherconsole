@@ -115,7 +115,7 @@
   font-size: clamp(38px,4vw,54px);
 }
 
-/* Glossy publisher lighting: one slow, soft sheen with a long still interval. */
+/* Calm, static publisher identity: metallic without a moving gloss. */
 .preview-shell::before {
   content: '';
   position: fixed;
@@ -123,87 +123,41 @@
   inset: -22%;
   pointer-events: none;
   background:
-    radial-gradient(circle at 24% 46%,rgba(255,255,255,.46) 0 4%,rgba(226,230,234,.14) 12%,transparent 27%),
-    radial-gradient(circle at 76% 53%,rgba(255,255,255,.38) 0 3%,rgba(205,211,217,.11) 12%,transparent 28%);
+    radial-gradient(circle at 24% 46%,rgba(255,255,255,.28) 0 4%,rgba(226,230,234,.08) 12%,transparent 27%),
+    radial-gradient(circle at 76% 53%,rgba(255,255,255,.22) 0 3%,rgba(205,211,217,.06) 12%,transparent 28%);
   filter: blur(18px);
-  opacity: .40;
+  opacity: .26;
   transform: translate3d(0,0,0) scale(1.03);
   animation: none !important;
 }
 
 .preview-shell .publisher-name,
 .preview-shell .publisher-word {
-  background-image:
-    linear-gradient(
-      102deg,
-      transparent 0%,
-      transparent 37%,
-      rgba(255,255,255,.10) 43%,
-      rgba(255,255,255,.34) 47%,
-      rgba(255,255,255,.92) 50%,
-      rgba(255,255,255,.38) 53%,
-      rgba(255,255,255,.10) 58%,
-      transparent 64%,
-      transparent 100%
-    ),
-    linear-gradient(
-      108deg,
-      #62686e 0%,
-      #c7ccd1 12%,
-      #f7f9fb 21%,
-      #9aa1a8 32%,
-      #e2e6e9 43%,
-      #ffffff 49%,
-      #c0c5cb 58%,
-      #747b82 70%,
-      #e5e8eb 84%,
-      #f9fafb 93%,
-      #828990 100%
-    ) !important;
-  background-size: 240% 100%, 100% 100% !important;
-  background-position: 125% 50%, 0 50%;
-  animation: glossyTextSheen 20s cubic-bezier(.45,0,.2,1) infinite !important;
-  filter:
-    drop-shadow(0 0 2px rgba(255,255,255,.42))
-    drop-shadow(0 10px 18px rgba(70,78,86,.07));
-  will-change: background-position;
-}
-
-.preview-shell .publisher-title::after {
-  width: 22% !important;
-  left: -30% !important;
-  top: -22% !important;
-  bottom: -24% !important;
-  opacity: 0 !important;
-  border-radius: 50% !important;
-  background: linear-gradient(
-    100deg,
-    transparent 0%,
-    rgba(255,255,255,.04) 18%,
-    rgba(255,255,255,.20) 36%,
-    rgba(255,255,255,.50) 50%,
-    rgba(222,226,231,.20) 64%,
-    rgba(255,255,255,.04) 82%,
-    transparent 100%
+  background-image: linear-gradient(
+    108deg,
+    #6d747b 0%,
+    #c9ced3 13%,
+    #f3f5f6 24%,
+    #a5abb1 36%,
+    #d9dde1 48%,
+    #f7f8f9 58%,
+    #bcc2c8 70%,
+    #7e858c 82%,
+    #dfe3e6 92%,
+    #969da4 100%
   ) !important;
-  filter: blur(14px) !important;
-  transform: skewX(-10deg) !important;
-  animation: glossyReflection 20s cubic-bezier(.45,0,.2,1) infinite !important;
+  background-size: 100% 100% !important;
+  background-position: 0 50% !important;
+  animation: none !important;
+  filter:
+    drop-shadow(0 0 1px rgba(255,255,255,.30))
+    drop-shadow(0 9px 16px rgba(70,78,86,.06));
+  will-change: auto !important;
 }
 
+.preview-shell .publisher-title::after,
 .preview-shell .publisher-title::before {
-  content: '';
-  position: absolute;
-  z-index: -2;
-  top: -34%;
-  bottom: -36%;
-  left: 26%;
-  width: 48%;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center,rgba(255,255,255,.46) 0%,rgba(230,234,238,.16) 40%,transparent 74%);
-  filter: blur(26px);
-  opacity: .24;
+  display: none !important;
   animation: none !important;
 }
 
@@ -212,18 +166,19 @@
   animation: none !important;
 }
 
-@keyframes glossyTextSheen {
-  0%, 12% { background-position: 125% 50%, 0 50%; }
-  38% { background-position: -125% 50%, 0 50%; }
-  38.01%, 100% { background-position: -125% 50%, 0 50%; }
-}
-
-@keyframes glossyReflection {
-  0%, 12% { left: -30%; opacity: 0; }
-  18% { opacity: .08; }
-  27% { opacity: .30; }
-  34% { opacity: .16; }
-  38%, 100% { left: 108%; opacity: 0; }
+/* Admin Console is a quiet subtitle, not a button. */
+.preview-shell .admin-label {
+  margin-top: -8px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: translateY(-4px);
+  font: 500 12px/1.2 Inter, ui-sans-serif, system-ui, sans-serif !important;
+  letter-spacing: .10em !important;
+  text-transform: none !important;
+  color: #7b8490 !important;
 }
 
 @media (max-width: 860px) {
@@ -238,6 +193,10 @@
       drop-shadow(0 14px 10px rgba(38,44,50,.20));
   }
   .preview-shell .analytics-menu { bottom: 104px !important; }
+  .preview-shell .admin-label {
+    margin-top: -6px !important;
+    transform: translateY(-3px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
