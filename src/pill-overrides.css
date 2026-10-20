@@ -115,20 +115,20 @@
   font-size: clamp(38px,4vw,54px);
 }
 
-/* Calm, static publisher identity: metallic without a moving gloss. */
+/* Keep the lettering metallic and still; move the light around it instead. */
 .preview-shell::before {
   content: '';
   position: fixed;
   z-index: 0;
-  inset: -22%;
+  inset: -28%;
   pointer-events: none;
   background:
-    radial-gradient(circle at 24% 46%,rgba(255,255,255,.28) 0 4%,rgba(226,230,234,.08) 12%,transparent 27%),
-    radial-gradient(circle at 76% 53%,rgba(255,255,255,.22) 0 3%,rgba(205,211,217,.06) 12%,transparent 28%);
-  filter: blur(18px);
-  opacity: .26;
-  transform: translate3d(0,0,0) scale(1.03);
-  animation: none !important;
+    radial-gradient(circle at 30% 45%,rgba(255,255,255,.52) 0 3%,rgba(224,228,232,.16) 10%,transparent 26%),
+    radial-gradient(circle at 72% 55%,rgba(255,255,255,.38) 0 3%,rgba(199,205,211,.11) 11%,transparent 28%);
+  filter: blur(24px);
+  opacity: .42;
+  transform: translate3d(-2.5%,0,0) scale(1.04);
+  animation: ambientLightDrift 18s ease-in-out infinite alternate !important;
 }
 
 .preview-shell .publisher-name,
@@ -155,10 +155,25 @@
   will-change: auto !important;
 }
 
-.preview-shell .publisher-title::after,
+.preview-shell .publisher-title::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute;
+  z-index: -1;
+  top: -24% !important;
+  bottom: -26% !important;
+  left: 10% !important;
+  width: 26% !important;
+  border-radius: 50% !important;
+  opacity: .18 !important;
+  background: radial-gradient(ellipse at center,rgba(255,255,255,.75) 0%,rgba(226,230,234,.24) 38%,transparent 72%) !important;
+  filter: blur(24px) !important;
+  transform: translate3d(-10px,0,0) !important;
+  animation: titleHaloDrift 14s ease-in-out infinite alternate !important;
+}
+
 .preview-shell .publisher-title::before {
   display: none !important;
-  animation: none !important;
 }
 
 .preview-shell .publisher-atmosphere i {
@@ -166,19 +181,51 @@
   animation: none !important;
 }
 
-/* Admin Console is a quiet subtitle, not a button. */
+/* Admin Console: intentionally asymmetric, like one edge never fully sprang back. */
 .preview-shell .admin-label {
-  margin-top: -8px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  transform: translateY(-4px);
-  font: 500 12px/1.2 Inter, ui-sans-serif, system-ui, sans-serif !important;
-  letter-spacing: .10em !important;
-  text-transform: none !important;
-  color: #7b8490 !important;
+  position: relative !important;
+  margin-top: -7px !important;
+  padding: 7px 16px 8px 18px !important;
+  border: 1px solid rgba(143,151,160,.30) !important;
+  border-radius: 12px 12px 7px 13px !important;
+  background: linear-gradient(180deg,rgba(255,255,255,.76),rgba(226,230,234,.58)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.88),
+    inset -7px -3px 9px rgba(108,116,124,.17),
+    inset 2px 0 0 rgba(255,255,255,.38),
+    0 4px 10px rgba(54,62,70,.07) !important;
+  transform: translateY(-7px) perspective(180px) rotateX(.4deg) !important;
+  font: 600 11px/1.1 Inter, ui-sans-serif, system-ui, sans-serif !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  color: #66707a !important;
+  clip-path: polygon(0 0,100% 0,100% 72%,95% 92%,83% 100%,0 100%);
+}
+
+.preview-shell .admin-label::after {
+  content: '';
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  width: 24%;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(118,126,134,.12);
+  filter: blur(3px);
+  transform: rotate(-5deg);
+  pointer-events: none;
+}
+
+@keyframes ambientLightDrift {
+  0% { transform: translate3d(-3%,1%,0) scale(1.04); opacity: .30; }
+  50% { transform: translate3d(1.5%,-1%,0) scale(1.055); opacity: .48; }
+  100% { transform: translate3d(4%,-.5%,0) scale(1.04); opacity: .34; }
+}
+
+@keyframes titleHaloDrift {
+  0% { left: 8%; opacity: .10; transform: translate3d(-8px,2px,0) scale(.92); }
+  50% { left: 43%; opacity: .24; transform: translate3d(4px,-3px,0) scale(1.04); }
+  100% { left: 67%; opacity: .12; transform: translate3d(8px,1px,0) scale(.96); }
 }
 
 @media (max-width: 860px) {
@@ -194,14 +241,13 @@
   }
   .preview-shell .analytics-menu { bottom: 104px !important; }
   .preview-shell .admin-label {
-    margin-top: -6px !important;
-    transform: translateY(-3px);
+    margin-top: -5px !important;
+    transform: translateY(-5px) !important;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .preview-shell .publisher-name,
-  .preview-shell .publisher-word,
+  .preview-shell::before,
   .preview-shell .publisher-title::after {
     animation: none !important;
   }
