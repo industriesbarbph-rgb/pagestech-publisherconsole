@@ -119,6 +119,59 @@
   font-size: clamp(38px,4vw,54px);
 }
 
+/* Make the silver reflection visibly travel across the publisher title. */
+.preview-shell .publisher-name,
+.preview-shell .publisher-word {
+  background-image: linear-gradient(
+    112deg,
+    #d7dbe0 0%,
+    #f8fafc 12%,
+    #9ea4ab 25%,
+    #e7eaee 38%,
+    #ffffff 47%,
+    #ffffff 52%,
+    #b3b9c0 61%,
+    #4b5056 74%,
+    #d8dde2 87%,
+    #f9fafb 100%
+  ) !important;
+  background-size: 260% 100% !important;
+  background-position: 110% 50%;
+  animation:
+    publisherTextSweep 8s cubic-bezier(.42,0,.18,1) infinite,
+    breathingGlow 8s ease-in-out infinite !important;
+  will-change: background-position, filter;
+}
+
+.preview-shell .publisher-title::after {
+  width: 30% !important;
+  left: -34% !important;
+  opacity: 0 !important;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255,255,255,.10) 20%,
+    rgba(255,255,255,.68) 48%,
+    rgba(214,219,225,.24) 70%,
+    transparent 100%
+  ) !important;
+  filter: blur(13px) !important;
+  animation: publisherReflection 8s cubic-bezier(.42,0,.18,1) infinite !important;
+}
+
+@keyframes publisherTextSweep {
+  0%, 10% { background-position: 110% 50%; }
+  90%, 100% { background-position: -110% 50%; }
+}
+
+@keyframes publisherReflection {
+  0%, 8% { left: -34%; opacity: 0; }
+  18% { opacity: .24; }
+  48% { opacity: .66; }
+  76% { opacity: .24; }
+  90%, 100% { left: 104%; opacity: 0; }
+}
+
 @media (max-width: 860px) {
   .preview-shell .rail button,
   .preview-shell .analytics-menu button {
@@ -131,4 +184,12 @@
       drop-shadow(0 14px 10px rgba(38,44,50,.20));
   }
   .preview-shell .analytics-menu { bottom: 104px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-shell .publisher-name,
+  .preview-shell .publisher-word,
+  .preview-shell .publisher-title::after {
+    animation: none !important;
+  }
 }
